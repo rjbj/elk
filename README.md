@@ -4,10 +4,10 @@
 2. elk版本:6.1.3
 3. 主机IP：192.168.111.139
 4. redis版本：2.8.2
-5. 
 
-### elk集成 ###
-https://my.oschina.net/neverforget/blog/1511022
+### demo地址 ###
+
+https://github.com/system-integration/elk
 
 ### es安装 ###
 
