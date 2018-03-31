@@ -39,18 +39,6 @@ https://github.com/system-integration/elk
 	elk hard nproc 4096
 	EOF
 
-	cat >> /etc/profile <<EOF
-	ulimit -u 65535
-	ulimit -n 4096
-	ulimit -d unlimited 
-	ulimit -m unlimited 
-	ulimit -s unlimited 
-	ulimit -t unlimited 
-	ulimit -v unlimited
-	EOF
-
-	source /etc/profile
-
 > elk用户安装jdk
 
 	export JAVA_HOME=~/java
@@ -72,7 +60,7 @@ https://github.com/system-integration/elk
 
 > 解压安装es修改配置如下
 
-	# 配置文件路径 /work/elasticsearch-6.1.3/config/elasticsearch.yml
+	# 配置文件路径 /elk/elasticsearch-6.1.3/config/elasticsearch.yml
 
 	network.host: 192.168.111.139
 	path.data: /elk/data
@@ -125,12 +113,10 @@ https://github.com/system-integration/elk
 	        }
 	}
 	output {
-	#通过不同type区分不同系统
-	if [type] =~ "app1" {
 	
 		#输出到本地文件
 	    file {
-	        path => "/elk/app1.log"
+	        path => "/elk/%{type}.log"
 	        codec => line
 	        {
 	        format => "[%{@timestamp}]--[%{level}]--[%{host}]--%{message}"
@@ -142,10 +128,6 @@ https://github.com/system-integration/elk
 	        index => "%{type}-%{+YYYY.MM.dd}"
 	        }
 	
-	}
-	if [type] =~ "app2" {
-	
-	}
 	}
 
 	EOF
